@@ -1,0 +1,31 @@
+{
+  "name": "ignore-bad-ts",
+  "version": "1.0.0",
+  "description": "Comands to modify files of a typescript dependency that was written in malformed typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "link": "npm link",
+    "unlink": "npm unlink"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=12.x"
+  },
+  "dependencies": {
+    "@types/node": "^16.11.6",
+    "commander": "^8.3.0",
+    "fast-glob": "^3.2.7",
+    "fs": "^0.0.1-security"
+  },
+  "bin": {
+    "ignore-bad-ts": "./lib/cli.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4"
+  }
+}
