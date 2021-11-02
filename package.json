@@ -1,6 +1,6 @@
 {
   "name": "ignore-bad-ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Comands to modify files of a typescript dependency that was written in malformed typescript",
   "main": "lib/no-check-files.js",
   "types": "lib/no-check-files.d.ts",

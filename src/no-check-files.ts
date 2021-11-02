@@ -12,6 +12,8 @@ export type IgnoreOptions = {
     debugGlob?: boolean;
     // If true, this will print ALL files that are examined for ts-nocheck to be added
     debugTS?: boolean;
+    // If true, this will report but will not actually write
+    dryRun?: boolean;
 };
 
 const tsExtensionsRegex = /\.tsx?/i;
@@ -39,7 +41,9 @@ function tryAddIgnoreToFileSync(filePath: string, options: IgnoreOptions) {
         const file = readFileSync(filePath, { encoding: 'utf8' });
         if (!file.match(tsNoCheckRegex)) {
             console.log(`Writing @ts-nocheck to file ${filePath}`);
-            writeFileSync(filePath, `// @ts-nocheck\n// ^ Above line was added by ignore-bad-ts\n${file}`);
+            if (!options.dryRun) {
+                writeFileSync(filePath, `// @ts-nocheck\n// ^ Above line was added by ignore-bad-ts\n${file}`);
+            }
         }
     }
 }
@@ -60,16 +64,18 @@ async function tryAddIgnoreToFile(filePath: string, options: IgnoreOptions) : Pr
 
         if (!file.match(tsNoCheckRegex)) {
             console.log(`Writing @ts-nocheck to file ${filePath}`);
-            const writePromise = new Promise<void>((resolve, reject) => {
-                writeFile(filePath, `// @ts-nocheck\n// ^ Above line was added by ignore-bad-ts\n${file}`, (err) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve();
-                    }
+            if (!options.dryRun) {
+                const writePromise = new Promise<void>((resolve, reject) => {
+                    writeFile(filePath, `// @ts-nocheck\n// ^ Above line was added by ignore-bad-ts\n${file}`, (err) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve();
+                        }
+                    });
                 });
-            });
-            return writePromise;
+                return writePromise;
+            }
         }
     }
     return Promise.resolve();

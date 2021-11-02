@@ -90,3 +90,29 @@ it('Does not write asynchronously if ignore lines are present', async () => {
     assertFileMapUnchanged(origFileMap);
 
 });
+
+it('Does not write asynchronously if dryRun', async () => {
+
+    origFileMap = getFileMap('asyncAdd');
+
+    await ignoreFiles(['node_modules/**'], {
+        cwd: fixtureDir('asyncAdd'),
+        dryRun: true,
+    });
+
+    assertFileMapUnchanged(origFileMap);
+
+});
+
+it('Does not write synchronously if dryRun', async () => {
+
+    origFileMap = getFileMap('syncAdd');
+
+    await ignoreFilesSync(['node_modules/**'], {
+        cwd: fixtureDir('syncAdd'),
+        dryRun: true,
+    });
+
+    assertFileMapUnchanged(origFileMap);
+
+});
