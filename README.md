@@ -23,13 +23,13 @@ import CompanyModule from 'my-company-module';
 // All your awesome typed code here
 ```
 
-And when you run it, your seeing errors from... your node_modules!
+And when you run it, you're seeing errors from... your node_modules!
 
 ```
 node_modules/my-company-module/src/it-has-ts-at-least.ts - error TS7053 Element implicitly has an 'any' type...
 ```
 
-Admittedly, the above error isn't THAT critical of a rule, but you still can't compile without changing your tscongif.  So what happened?
+Admittedly, the above error isn't THAT critical of a rule, but you still can't compile without changing your tsconfig.  So what happened?
 
 Well...
 
@@ -64,7 +64,7 @@ In the above example, we are telling ignore-bad-ts to inject ts-ignore tags on a
 
 ## Programmatic API
 
-This package also provides programmatic methods for marked files as ignored programmatically.
+This package also provides programmatic methods for marking files as ignored programmatically.
 
 ## ignoreFiles
 
@@ -77,11 +77,11 @@ when you are restricted to synchronous execution (like nextjs configs).
 
 ### Arguments
 
-Both functions generally match the argument signature of [fast-glob](https://www.npmjs.com/package/fast-glob?activeTab=readme).
+Both functions generally match the argument signature of sync/stream from [fast-glob](https://www.npmjs.com/package/fast-glob?activeTab=readme).
 
 There are a few differences:
 
-1. Output variables are not allowed from fast-glob (This would affect how the glob output is processed)
+1. Output options are not allowed from fast-glob (This would affect how the glob output is processed)
 2. debugGlob - Use this to log all files that matched the globs. (Helpful for verifying your glob is doing what you think)
 3. debugTS - Use this to log all files that matched for writing @ts-nocheck.  (Helpful for verifying only the ts files that should be written to)
 
@@ -112,7 +112,7 @@ module.exports = {
 You may want to simply add the cli command in scripts to ensure they build correctly.
 
 Keep in mind, that you would need to apply this at every command that uses typechecking, since any
-new developer may run one command out of order with the other, and fail to get a compilation.
+new developer may run one command out of order with the other and fail to get a compilation.
 
 In the below example, we assume that jest is using ts-jest, and so we also want to ignore-bad-ts when calling it.
 
@@ -121,10 +121,48 @@ In the below example, we assume that jest is using ts-jest, and so we also want 
 {
     ...,
     "scripts": {
-        "build": "ignore-bad-ts node/modules/my-company-module/** && tsc",
-        "test": "ignore-bad-ts node/modules/my-company-module/** && jest"
+        "build": "ignore-bad-ts node_modules/my-company-module/** && tsc",
+        "test": "ignore-bad-ts node_modules/my-company-module/** && jest"
     },
     ...
+}
+```
+
+## Monorepo
+
+Assuming that you've used something like lerna to setup a monorepo with packages/{package_name}, you may want to change the glob to point to the
+upper directory where node_modules is consolidated.
+
+```bash
+// packageA package.json
+{
+    ...,
+    "scripts": {
+        "build": "ignore-bad-ts ../../node_modules/my-company-module/** && tsc",
+        "test": "ignore-bad-ts ../../node_modules/my-company-module/** && jest"
+    },
+    ...
+}
+```
+
+## Monorepo Programmatic Implementation
+
+Assuming we have a package that is also a NextJS site, we can take advantage of the cwd command to set the directory we check for globs from.
+
+```javascript
+// packageA next.config.js
+const { ignoreFilesSync } = require('ignore-bad-ts');
+const path = require('path');
+
+// Apply the ignore as we initialize this module, so nextJS can compile, etc.
+ignoreFilesSync(['node_modules/my-company-module/**'], { cwd: path.resolve(__dirname, '../..' });
+
+
+module.exports = {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Important: return the modified config
+    return config
+  },
 }
 ```
 
