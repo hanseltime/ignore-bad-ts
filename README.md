@@ -82,8 +82,9 @@ Both functions generally match the argument signature of sync/stream from [fast-
 There are a few differences:
 
 1. Output options are not allowed from fast-glob (This would affect how the glob output is processed)
-2. debugGlob - Use this to log all files that matched the globs. (Helpful for verifying your glob is doing what you think)
-3. debugTS - Use this to log all files that matched for writing @ts-nocheck.  (Helpful for verifying only the ts files that should be written to)
+2. debug-glob - Use this to log all files that matched the globs. (Helpful for verifying your glob is doing what you think)
+3. debug-ts - Use this to log all files that matched for writing @ts-nocheck.  (Helpful for verifying only the ts files that should be written to)
+4. dry-run - Use this to run the current command and view the logs but to not actually alter the files.  (Helpful for quick debugging)
 
 # Recipes/Examples
 

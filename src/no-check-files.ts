@@ -11,7 +11,7 @@ export type IgnoreOptions = {
     // If true, this will print ALL glob matches
     debugGlob?: boolean;
     // If true, this will print ALL files that are examined for ts-nocheck to be added
-    debugTS?: boolean;
+    debugTs?: boolean;
     // If true, this will report but will not actually write
     dryRun?: boolean;
 };
@@ -24,7 +24,7 @@ function isTSFile(filePath: string) {
 }
 
 function tsDebug(filePath: string | Buffer, options: IgnoreOptions) {
-    if (options?.debugTS) {
+    if (options?.debugTs) {
         console.debug(`TS No-Check Match: ${filePath}`);
     }
 }

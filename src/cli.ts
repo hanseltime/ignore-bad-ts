@@ -5,8 +5,8 @@ import { ignoreFiles, IgnoreOptions } from './no-check-files';
 const program = new Command();
 
 program.version('0.1.0')
-    .option('--debugGlob', 'Display all files matching the globs provided', false)
-    .option('--debugTS', 'Display all files that would have @ts-nocheck added', false)
+    .option('--debug-glob', 'Display all files matching the globs provided', false)
+    .option('--debug-ts', 'Display all files that would have @ts-nocheck added', false)
     .option('--dry-run', 'Does not actually write to the files.  Useful for debugging.', false);
 
 program.parse(process.argv);
