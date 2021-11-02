@@ -127,3 +127,9 @@ In the below example, we assume that jest is using ts-jest, and so we also want 
     ...
 }
 ```
+
+## Development Notes
+
+If you would like to test a feature or changes to this package, I highly recommend setting up a local verdaccio instance.
+
+TBD: I will link a bare bones local verdaccio registry for running on your local machine.  This allows you to separately import your package. :D
