@@ -1,6 +1,6 @@
 {
   "name": "ignore-bad-ts",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": {
     "name": "Justin Hanselman",
     "url": "https://github.com/hanseltime"
@@ -23,8 +23,7 @@
   "dependencies": {
     "@types/node": "^16.11.6",
     "commander": "^8.3.0",
-    "fast-glob": "^3.2.7",
-    "fs": "^0.0.1-security"
+    "fast-glob": "^3.2.7"
   },
   "bin": {
     "ignore-bad-ts": "./lib/cli.js"
