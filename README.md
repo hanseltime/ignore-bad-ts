@@ -6,6 +6,10 @@ This project provides various CLI and programmatic APIs to avoid type-checking f
 ## Installation
 
 ```bash
+    ## Example Globally
+    npm install -g ignore-bad-ts
+
+    ## Example Per project
     yarn add --dev ignore-bad-ts
 ```
 
@@ -56,11 +60,19 @@ may become deprecated if per module type checking is added to the typescript com
 
 Once installed, you have the option of running a CLI tool
 
-```
-ignore-bad-ts node_modules/my-company-module/**
+```bash
+    ## Example Globally installed usage
+    ignore-bad-ts "node_modules/my-company-module/**"
+    
+    ## Example Per project usage
+    yarn run ignore-bad-ts "node_modules/my-company-module/**"
 ```
 
 In the above example, we are telling ignore-bad-ts to inject ts-ignore tags on all current files in the directory that match the glob "node_modules/my-company-module/**".
+
+__IMPORTANT__ on Unix systems, the shell may try to intercept the glob for you if you don't wrap your glob in "".  If you do this, the script will not function as intended (feel free to debug the issue).
+
+### CLI if not global
 
 ## Programmatic API
 
